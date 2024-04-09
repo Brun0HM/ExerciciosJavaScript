@@ -127,7 +127,7 @@ exercicio8 = () => {
     document.getElementById("erro").innerText =
       "Essa palavra não é um palíndromo";
   }
-
+}
   exercicio9 = () => {
     let soma = 0;
     let resuntado = document.getElementById("resposta");
@@ -136,7 +136,7 @@ exercicio8 = () => {
       resuntado.innerHTML = `O valor da soma é de ${soma}`;
     }
   };
-};
+
 
 exercicio10 = () => {
   let num = document.getElementById("num").value;
@@ -189,41 +189,43 @@ exercicio12 = () => {
     resultado.innerText = soma;
   }
 };
+//13
+const verificaprimo = (numero) => {
+  if (numero <= 1) {
+    return false;
+  }
 
-exercicio13 = () => {
-  let num1 = document.getElementById("num1").value;
-    let num2 = document.getElementById("num2").value;
-    let error = document.getElementById("erro");
-    let result = document.getElementById("resultado");
-    let maior, menor;
-    result.innerText = "";
-    if (num2 < num1) {
-        menor = parseInt(num2)
-        maior = parseInt(num1)
-    } else {
-        menor = parseInt(num1);
-        maior = parseInt(num2);
+  let primo = true;
+  for (let m = 2; m * m <= numero; m++) {
+    if (numero % m === 0) {
+      primo = false;
+      break;
     }
-
-    if (parseInt(num1) <= 0 || parseInt(num2) <= 0) {
-        error.innerText = "Digite Números maiores que Zero";
-        result.innerText = "";
-    }else{
-        error.innerText = "" ;
-        for (let i = menor; i <= maior; i++) {
-            let teste = verificarPrimo(i);
-            if(teste)
-                result.innerText += ` ${i}`
-        }
-    }
+  }
+  return primo;
 };
+exercicio13 = () => {
+  let resultado = document.getElementById("resultado");
+  resultado.innerHTML = "";
 
-function verificarPrimo(numero){
-    let primo = true;
-    for (let i = 2; i < numero; i++) {
-        if (numero % i == 0) primo = false;
+  let min = document.getElementById("num1").value;
+  min = Math.round(min);
+  let max = document.getElementById("num2").value;
+  max = Math.round(max);
+
+  const numEntre = [];
+  let erro = document.getElementById("erro");
+  if (min < 0 || max < -0 || min >= max) {
+    error.innerText = "Erro: insira um número positivo e diferente do outro ";
+    error.innerText = "";
+  } else {
+    for (let m = min; m < max; m++) {
+      let numEntre = verificaprimo(m);
+      if (numEntre) {
+        resultado.innerHTML += `<h3>#${m}</h3>`;
+      }
     }
-    return primo
+  }
 };
 
 exercicio14 = () => {
@@ -382,7 +384,6 @@ exercicio20 = () => {
   document.getElementById("resultado").innerText = `${inv.join(" ")}`;
 };
 
-
 exercicio21 = () => {
   let frase = document.getElementById("frase").value;
   let error = document.getElementById("erro");
@@ -399,12 +400,20 @@ exercicio21 = () => {
   }
 };
 
+var soma = 0;
 exercicio22 = () => {
-  let num = document.getElementById("num").value;
   let error = document.getElementById("erro");
   let resultado = document.getElementById("resultado");
-
-  if (num >= 100) {
+  let valor = document.getElementById("num").value * 1;
+  error.innerHTML = ""
+  resultado.innerHTML = ""
+  if (valor <= 0) {
+    error.innerHTML = `Insira um valor postivo`;
+  } else if (soma <= 100) {
+    soma += valor;
+    resultado.innerHTML = `#${soma}`;
+  } else if (soma > 100) {
+    error.innerText = `A soma deu maior que 100`;
   }
 };
 
@@ -432,25 +441,48 @@ exercicio23 = () => {
 };
 
 exercicio24 = () => {
-  let error = document.getElementById("erro");
-  let frase = document.getElementById("frase").value;
-
-  if (frase == "") {
-    error.innerHTML = "Insira sua frase";
-  } else {
-  }
-};
+    let resultado = document.getElementById("resultado");
+  
+    let valor = document.getElementById("frase").value;
+    let frase = valor.split(" ");
+    const array = [];
+  
+    let erro = document.getElementById("erro");
+  
+    if (valor == "") {
+      erro.innerText = "Coloque um título!";
+      resultado.innerHTML = "";
+    } else {
+      erro.innerText = "";
+      const fraseMod = frase.map((palavra) => {
+        //Utilizei o map para retornar o array com os transofrmações feitas pela função
+        const primeiraLetra = palavra[0].toUpperCase(); //Acessa o primeiro caractere da palavra
+        array.push(primeiraLetra); //Adiciona as letras maiúsculas na array primeirasLetras
+        return primeiraLetra + palavra.slice(1); // Substituindo a primeira letra pela versão maiúscula
+      });
+      resultado.innerHTML = `<h1>${fraseMod.join(" ")}</h1>`;
+    }
+  };
 
 exercicio25 = () => {
   let error = document.getElementById("erro");
   let num1 = document.getElementById("num1").value;
-  let num2 = document.getElementById("num3").value;
-  let num3 = document.getElementById("num2").value;
-
-  if (num1 < 0 || num2 < 0 || num3 < 0) {
+  let num2 = document.getElementById("num2").value;
+  let num3 = document.getElementById("num3").value;
+  let resultado = document.getElementById("resultado");
+  error.innerHTML = "";
+  resultado.innerHTML = "";
+  let array = [];
+  array.push(num1);
+  array.push(num2);
+  array.push(num3);
+  array.sort((a, b) => a - b);
+  console.log(array);
+  if (num1 <= 0 || num2 <= 0 || num3 <= 0) {
     error.innerHTML = "Insira os números";
   } else {
-  
+    for (let i = 0; i <= 2; i++) {
+      resultado.innerText += `# ${array[i]} `;
+    }
   }
 };
- 
